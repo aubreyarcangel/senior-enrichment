@@ -1,10 +1,10 @@
-'use strict'; 
+ 'use strict'; 
 
 const express = require('express');
 const path = require('path');
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
-
+const apiRouter = require('./api')
 const app = express();
 
 //logging middleware
