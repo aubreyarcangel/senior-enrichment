@@ -1,6 +1,6 @@
 'use strict'
 const apiRouter = require('express').Router()
-const db = require('../db')
+const { db } = require('../db')
 const StudentRouter = require('./Students');
 const CampusRouter = require('./Campuses');
 // If you aren't getting to this object, but rather the index.html (something with a joke) your path is wrong.

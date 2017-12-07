@@ -1,5 +1,5 @@
 const StudentRouter = require('express').Router();
-const Student = require('../db/models/Student');
+const { Student} = require('../db/models/Student');
 
 StudentRouter.get('/', (req, res, next) => {
   Student.findAll()
@@ -7,8 +7,9 @@ StudentRouter.get('/', (req, res, next) => {
   .catch(next);
 });
 
-
-
+StudentRouter.get('/:id', (req, res) => {
+  res.json(req.student);
+});
 
 
 module.exports = StudentRouter;
