@@ -4,8 +4,8 @@ const express = require('express');
 const path = require('path');
 const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
-const apiRouter = require('./api')
 const app = express();
+const apiRouter = require('./api');
 
 //logging middleware
 app.use(volleyball);
