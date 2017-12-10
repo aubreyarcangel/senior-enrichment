@@ -21,6 +21,8 @@ const AllCampuses = props => {
            );
             })}
         </ul>
+        <Link to={`/add-campus`}>Add New Campus</Link>
+        
     </div>
 
   );

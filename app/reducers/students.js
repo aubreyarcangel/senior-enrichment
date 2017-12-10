@@ -49,6 +49,15 @@ export const getAllStudents = () => {
   };
 };
 
+export const removeStudent = (student, props) => {
+  return (dispatch) => {
+    axios.delete(`/api/students/${student.id}`)
+    .then(() =>
+      dispatch(deleteStudent(student))
+      .catch(console.error));
+    };
+};
+
 // REDUCER
 
 export default (state = [], action) => {

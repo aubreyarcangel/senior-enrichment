@@ -1,3 +1,4 @@
+const express = require('express');
 const CampusRouter = require('express').Router();
 const { Student, Campus } = require('../db/models');
 

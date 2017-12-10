@@ -1,38 +1,44 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import { removeStudent } from '../reducers/students';
 
-const AllStudents = props => {
+const AllStudents = (props) => {
+  let students = props.students;
+
+
   return (
     <div>
       <h1>The Students</h1>
+      <ul>
       {
-        props.students.map(student => {
+        students.map(student => {
           return (
             <div key={student.id}>
-              <h2>{ student.name }</h2>
-
+              <Link to={`/students/${student.id}`} >Name: {student.name}</Link>
+              <button key={student.id} onClick={() => props.deleteHandler(student)}>X</button>
             </div>
           );
         })
       }
+      </ul>
     </div>
   );
 };
 
-// function mapStateToProps(state, ownProps) {
-//   return {
-//     // campuses: state.campuses,
-//     students: state.students
-//   };
-// }
 
-// function mapDispatchToProps(dispatch, ownProps) {
-//   return {
-//     // deleteCampus: function(campus) {dispatch(deleteCampusFromServerA(campus, ownProps.history))}
-//   }
-// }
+const mapStateToProps = (state, ownProps) => {
+  if (ownProps.students) return {students: ownProps.students};
+  else return {students: state.students};
+  // return {
+  //   // campuses: state.campuses,
+  //   students: state.students
+  // };
+};
 
-// connect(mapStateToProps, mapDispatchToProps)(AllStudents);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    deleteHandler: (student) => dispatch(removeStudent(student, ownProps))};
+  };
 
-export default AllStudents;
+export default connect(mapStateToProps, mapDispatchToProps)(AllStudents);

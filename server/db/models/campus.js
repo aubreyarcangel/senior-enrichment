@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../index');
+const Student = require('./student');
 
 const Campus = db.define('campus', {
   name: {
@@ -15,6 +16,10 @@ const Campus = db.define('campus', {
   },
   description: {
     type: Sequelize.STRING
+  }
+}, {
+  defaultScope: {
+    include: [Student]
   }
 });
 
