@@ -1,87 +1,95 @@
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {createNewCampus} from '../reducers/campuses';
 
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { createCampus } from '../reducers/campuses';
+class CampusAddForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      campusName: '',
+      campusPicture: '',
+      campusDescription: '',
+      clickedbutton: false,
+      isDirty: false
+    };
+    this.campusNameChangeHandler = this.campusNameChangeHandler.bind(this);
+    this.campusPictureChangeHandler = this.campusPictureChangeHandler.bind(this);
+    this.campusDescriptionChangeHandler = this.campusDescriptionChangeHandler.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
+  }
 
-// class AddCampusForm extends Component {
+  campusNameChangeHandler(event) {
+    this.setState({campusName: event.target.value, isDirty: true});
+  }
 
-//   componentDidMount() {
-//     this.props.setInput(this.props.campus)
-//   }
+  campusPictureChangeHandler(event) {
+    this.setState({campusPicture: event.target.value, isDirty: true});
+  }
 
-//   render() {
-//     const {
-//       campusEntry,
-//       label,
-//       handleChange,
-//       handleSubmit,
-//       buttonText
-//     } = this.props;
-//   }
+  campusDescriptionChangeHandler(event) {
+    this.setState({campusDescription: event.target.value, isDirty: true});
+  }
 
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label>{label}</label>
-//           <input
-//             value={campusEntry.campusName}
-//             onChange={handleChange}
-//             type="text"
-//             name="campusName"
-//             placeholder="Enter campus name"
-//           />
-//           <input
-//             value={campusEntry.campusDescription}
-//             onChange={handleChange}
-//             type="text"
-//             name="campusDescription"
-//             placeholder="Enter campus description"
-//           />
-//         </div>
-//         <div>
-//           <button type="submit">{buttonText}</button>
-//         </div>
-//       </form>
-//     </div>
-//   )
-// }
+  clickHandler() {
+    this.setState({clickedbutton: !this.state.clickedbutton});
+  }
 
-// const mapStateToProps = function (state, ownProps) {
-// return {
-//   campus: ownProps.campus,
-//   campusEntry: state.campusEntry,
-//   label: ownProps.label,
-//   buttonText: ownProps.buttonText
-// }
-// };
+  submitHandler(event) {
+    event.preventDefault();
+    this.props.createCampus({ name: this.state.campusName, imageUrl: this.state.campusUrl, description: this.state.campusDescription });
+    this.setState({campusName: '', campusPicture: '', campusDescription: '', isDirty: false});
+  }
 
-// const mapDispatchToProps = function (dispatch, ownProps) {
-// return {
-//   setInput() {
-//     if (ownProps.campus) {
-//       dispatch(writeCampusName(ownProps.campus.name));
-//       dispatch(writeCampusDescription(ownProps.campus.description));
-//     } else {
-//       dispatch(writeCampusName(''));
-//       dispatch(writeCampusDescription(''));
-//     }
-//   },
-//   handleChange (event) {
-//     const input = event.target.value;
-//     const field = event.target.name;
-//     if (field === 'campusName') dispatch(writeCampusName(input));
-//     if (field === 'campusDescription') dispatch(writeCampusDescription(input));
-//   },
-//   handleSubmit (event) {
-//     event.preventDefault();
-//     const name = event.target.campusName.value;
-//     const description = event.target.campusDescription.value;
-//     const campusId = ownProps.campus ? ownProps.campus.id : null;
-//     dispatch(ownProps.postOrPut({ name, description }, campusId));
-//     dispatch(writeCampusName(''));
-//     dispatch(writeCampusDescription(''));
-//   }
-// };
+  render() {
+    return (
+      <div>
+      <button onClick={this.clickHandler}>+ ADD NEW CAMPUS</button>
+      {this.state.clickedbutton ?
+        (
+        <div>
+          <form id="new-campus-form" onSubmit={this.submitHandler}>
+            <div>
+              <label>Campus Name: </label>
+              <input
+                value={this.state.campusName}
+                onChange={this.campusNameChangeHandler}
+                type="text"
+                placeholder="Campus Name:" />
+              <label>Campus Photo: </label>
+              <input
+                value={this.state.campusPicture}
+                onChange={this.campusPictureChangeHandler}
+                type="url"
+                placeholder="Campus Photo:" />
+              <label>Campus Description: </label>
+              <textarea
+                value={this.state.campusDescription}
+                onChange={this.campusDescriptionChangeHandler}
+                rows="3"
+                cols="50"
+                placeholder="Description:">stuff here</textarea>
+              <span>
+                <button type="submit" disabled={!this.state.campusName.length && this.state.isDirty}>Submit!</button>
+              </span>
+            </div>
+          </form>
+        </div>) : (<div />)
+      }
+  </div>
+    );
+  }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(CampusForm);
+const mapStateToProps = state => {
+  return {
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createCampus: function(info) {dispatch(createNewCampus(info));}
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampusAddForm);

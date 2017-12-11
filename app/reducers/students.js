@@ -58,6 +58,16 @@ export const removeStudent = (student, props) => {
     };
 };
 
+export const createNewStudent = (student) => {
+  return (dispatch) => {
+    axios.post('api/students/', student)
+    .then(res => res.data)
+    .then(({data}) => { dispatch(createStudent(data))
+    . catch(console.error);
+    });
+  };
+};
+
 // REDUCER
 
 export default (state = [], action) => {

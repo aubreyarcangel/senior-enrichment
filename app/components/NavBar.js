@@ -13,6 +13,6 @@ const Navbar = props => {
        </div>
      </nav>
   );
-}
+};
 
 export default Navbar;

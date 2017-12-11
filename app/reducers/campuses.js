@@ -36,13 +36,42 @@ export const deleteCampus = (campus) => {
   };
 };
 
-// THUNK CREATORS 
+// THUNK CREATORS
 
 export const getAllCampuses = () => {
   return dispatch => {
     return axios.get('/api/campuses')
     .then(res => res.data)
     .then(campuses => dispatch(getCampuses(campuses)))
+    .catch(console.error);
+  };
+};
+
+export const removeCampus = (campus, props) => {
+  return (dispatch) => {
+    axios.delete(`/api/campuses/${campus.id}`)
+    .then(res => res.data)
+    .then(() =>
+      dispatch(deleteCampus(campus))
+      .catch(console.error));
+    };
+};
+
+export const createNewCampus = (campus) => {
+  return (dispatch) => {
+    console.log(campus);
+    axios.post('api/campuses', campus)
+    .then(res => res.data)
+    .then(campus => dispatch(createCampus(campus)))
+    .catch(console.error);
+  };
+};
+
+export const updateCampus = (updates, id) => {
+  return (dispatch) => {
+    return axios.put(`api/campuses/${id}`, updates)
+    .then(res => res.data)
+    .then(() => dispatch(getCampuses(campuses)))
     .catch(console.error);
   };
 };
@@ -56,11 +85,11 @@ export default (state = [], action) => {
     case CREATE_CAMPUS:
       return [...state, action.campus];
     case EDIT_CAMPUS:
-      const campusArr = state.filter(campus => action.campus.id !== campus.id)
-      return [...campusArr, action.campus]
+      const campusArr = state.filter(campus => action.campus.id !== campus.id);
+      return [...campusArr, action.campus];
     case DELETE_CAMPUS:
-      const delCampus = state.filter(state => campus.id !== action.campus.id)
-      return delCampus
+      const delCampus = state.filter(state => campus.id !== action.campus.id);
+      return delCampus;
     default:
       return state;
   }

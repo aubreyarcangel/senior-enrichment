@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './home';
-import NavBar from './navbar';
+import Home from './Home';
+import NavBar from './NavBar';
 import AllStudents from './AllStudents';
-import SingleStudent from './singlestudent';
+import SingleStudent from './SingleStudent';
 import AllCampuses from './AllCampuses';
-import SingleCampus from './singlecampus';
+import SingleCampus from './SingleCampus';
 import AddCampusForm from './AddCampusForm';
 import {connect} from 'react-redux';
 import { getAllCampuses } from '../reducers/campuses';

@@ -1,11 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-// import CampusAddForm from './CampusAddform';
+import {removeCampus, createNewCampus} from '../reducers/campuses';
+import AddCampusForm from './AddCampusForm'
+
+
+
 
 const AllCampuses = props => {
   let campuses = props.campuses;
   let students = props.students;
+  let deleteCampus = props.deleteCampus;
 
   return (
     <div>
@@ -17,28 +22,30 @@ const AllCampuses = props => {
                 <Link to={`campuses/${campus.id}`}> {campus.name}
                 </Link>
                 <img src= {campus.imgUrl} height ="500" width = "500" />
+                <button onClick={() => props.deleteCampus(campus)}>DELETE CAMPUSX</button>
               </li>
            );
             })}
         </ul>
-        <Link to={`/add-campus`}>Add New Campus</Link>
-        
+        <AddCampusForm />
+
+
     </div>
 
   );
 };
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return {
     campuses: state.campuses,
     students: state.students
   };
-}
+};
 
-function mapDispatchToProps(dispatch, ownProps) {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    // deleteCampus: function(campus) {dispatch(deleteCampusFromServerA(campus, ownProps.history))}
-  }
-}
+    deleteCampus: function(campus) {dispatch(removeCampus(campus, ownProps.history));}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCampuses);
