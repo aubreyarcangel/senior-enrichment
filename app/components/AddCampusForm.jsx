@@ -12,6 +12,8 @@ class CampusAddForm extends Component {
       clickedbutton: false,
       isDirty: false
     };
+
+    // I got a little carried away with the length of these function names
     this.campusNameChangeHandler = this.campusNameChangeHandler.bind(this);
     this.campusPictureChangeHandler = this.campusPictureChangeHandler.bind(this);
     this.campusDescriptionChangeHandler = this.campusDescriptionChangeHandler.bind(this);
@@ -31,13 +33,14 @@ class CampusAddForm extends Component {
     this.setState({campusDescription: event.target.value, isDirty: true});
   }
 
+  // shows/hides form
   clickHandler() {
     this.setState({clickedbutton: !this.state.clickedbutton});
   }
 
   submitHandler(event) {
     event.preventDefault();
-    this.props.createCampus({ name: this.state.campusName, imageUrl: this.state.campusUrl, description: this.state.campusDescription });
+    this.props.createCampus({ name: this.state.campusName, imgUrl: this.state.campusPicture, description: this.state.campusDescription });
     this.setState({campusName: '', campusPicture: '', campusDescription: '', isDirty: false});
   }
 
@@ -70,7 +73,7 @@ class CampusAddForm extends Component {
                 cols="50"
                 placeholder="Description:">stuff here</textarea>
               <span>
-                <button type="submit" disabled={!this.state.campusName.length && this.state.isDirty}>Submit!</button>
+                <button type="submit">Submit!</button>
               </span>
             </div>
           </form>

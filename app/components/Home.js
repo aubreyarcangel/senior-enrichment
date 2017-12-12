@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
-import AllCampuses from './AllCampuses'
+import { Link } from 'react-router-dom';
+import AllCampuses from './AllCampuses';
 
 
 export default class Home extends Component {
@@ -10,6 +10,6 @@ export default class Home extends Component {
       <div>
         <AllCampuses />
       </div>
-    )
+    );
   }
 }

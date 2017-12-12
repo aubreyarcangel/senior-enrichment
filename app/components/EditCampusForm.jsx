@@ -2,28 +2,30 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {updateCampus} from '../reducers/campuses';
 
+// couldn't get this to work
+
 class EditCampusForm extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       campusName: '',
-      imageUrl: '',
+      campusPicture: '',
       campusDescription: '',
       isDirty: false
-    };
-
+   };
     this.nameChangeHandler = this.nameChangeHandler.bind(this);
     this.imageChangeHandler = this.imageChangeHandler.bind(this);
     this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
 
+
   nameChangeHandler(event) {
     this.setState({campusName: event.target.value, isDirty: true})
   }
 
   imageChangeHandler(event) {
-    this.setState({imageUrl: event.target.value, isDirty: true})
+    this.setState({campusPicture: event.target.value, isDirty: true})
   }
 
   descriptionChangeHandler(event) {
@@ -32,17 +34,20 @@ class EditCampusForm extends Component {
 
   submitHandler(event) {
     event.preventDefault()
-    if (name) campusUpdate.campusName = campusName;
-    if (image) campusUpdate.campusImage = campusImage;
-    if (description) campusUpdate.campusDescription = campusDescription;
-    console.log(updateCampus)    
+    const {campusName, campusPicture, campusDescription} = this.state;
+    const campusUpdate = {campusName, campusPicture, campusDescription}
+    if (campusName) campusUpdate.campusName = campusName;
+    if (campusPicture) campusUpdate.campusPicture = campusPicture;
+    if (campusDescription) campusUpdate.campusDescription = campusDescription;
     this.props.updateCampus(campusUpdate)
-    this.props.updateCampus({ name: this.state.campusName, 
-      imageUrl: this.state.imageUrl, 
-      description: this.state.campusDescription });
   }
 
   render(){
+    // console.log('state:');
+    // console.log(this.state);
+    const {campus} = this.props;
+    console.log(this.props);
+    console.log('campus:', campus);
     return (
       <div>
         <h3>Edit this Campus: </h3>
@@ -54,8 +59,8 @@ class EditCampusForm extends Component {
             </label>
             <label>Image:
               <input type="text" 
-                value={this.state.image} 
-                onChange={this.handleImageChange} />
+                value={this.state.imgUrl} 
+                onChange={this.imageChangeHandler} />
             </label>
             <label>Campus Description: 
               <textarea
@@ -72,15 +77,14 @@ class EditCampusForm extends Component {
 
 }
 
-const mapStateToProps = state => {
+
+const mapStateToProps = ({ campuses, students }) => ({ campuses, students });
+
+const mapDispatchToProps = (dispatch, props) => {
   return {
+    updateCampus: function(info) {dispatch(props.updateCampus(campus, props.history));}
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    editCampus: function(info) {dispatch(updateCampus(info));}
-  };
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCampusForm);

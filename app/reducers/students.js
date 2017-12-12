@@ -60,12 +60,23 @@ export const removeStudent = (student, props) => {
 
 export const createNewStudent = (student) => {
   return (dispatch) => {
-    axios.post('api/students/', student)
+    axios.post('/api/students/', student)
     .then(res => res.data)
     .then(({data}) => { dispatch(createStudent(data))
     . catch(console.error);
     });
   };
+};
+
+// still not working. Need to fix.
+export const updateExistingStudent = student => {
+  return  dispatch => {
+      dispatch(editStudent(student));
+      axios.put(`/api/students/${student.id}`, student)
+          // .then(({data: student}) => dispatch(updateStudent(student)))
+          .catch(err => console.error('Failed to update student', err));
+  };
+
 };
 
 // REDUCER

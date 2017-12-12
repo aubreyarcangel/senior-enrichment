@@ -67,11 +67,11 @@ export const createNewCampus = (campus) => {
   };
 };
 
-export const updateCampus = (updates, id) => {
+export const updateCampus = (campus, props) => {
   return (dispatch) => {
-    return axios.put(`api/campuses/${id}`, updates)
+    return axios.put(`/api/campuses/${campus.id}`, campus)
     .then(res => res.data)
-    .then(() => dispatch(getCampuses(campuses)))
+    .then(() => dispatch(editCampus(campus)))
     .catch(console.error);
   };
 };

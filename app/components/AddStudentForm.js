@@ -1,6 +1,7 @@
 import {createNewStudent} from '../reducers/students';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import AllStudents from './AllStudents';
 
 class AddStudentForm extends Component {
   constructor() {
@@ -10,13 +11,14 @@ class AddStudentForm extends Component {
       lastName: '',
       email: '',
       gpa: 0,
-      campus: 0,
+      campusId: '',
       clickedbutton: false
   };
   this.studentFnameChangeHandler = this.studentFnameChangeHandler.bind(this);
   this.studentLnameChangeHandler = this.studentLnameChangeHandler.bind(this);
   this.studentEmailChangeHandler = this.studentEmailChangeHandler.bind(this);
   this.studentGpaChangeHandler = this.studentGpaChangeHandler.bind(this);
+  this.studentCampusChangeHandler = this.studentCampusChangeHandler.bind(this);
   this.clickHandler = this.clickHandler.bind(this);  
   this.submitHandler = this.submitHandler.bind(this);
 }
@@ -38,7 +40,7 @@ class AddStudentForm extends Component {
   }
 
   studentCampusChangeHandler(event) {
-    this.setState({campus: event.target.value, isDirty: true});    
+    this.setState({campusId: event.target.value, isDirty: true});    
   }
 
   clickHandler() {
@@ -47,15 +49,16 @@ class AddStudentForm extends Component {
 
   submitHandler(event) {
     event.preventDefault();
+    // const student = this.state
     this.props.createStudent({ firstName: this.state.firstName, 
-      lastName: this.state.lastName, email: this.state.email, gpa: this.state.gpa, campus: this.state.campus });
-    this.setState({firstName: '', lastName: '', email: '', gpa: 0, campus: 0, isDirty: false});
+      lastName: this.state.lastName, email: this.state.email, gpa: this.state.gpa, campusId: this.state.campus });
+    this.setState({firstName: '', lastName: '', email: '', gpa: 0, campusId: 0, isDirty: false});
   }
 
   render() {
     return (
       <div>
-      <button onClick={this.clickHandler}>+ ADD NEW STUDENT</button>
+      <button onClick={this.clickHandler}>+ ADD NEW STUDENT +</button>
       {this.state.clickedbutton ?
         (
         <div>
@@ -87,12 +90,12 @@ class AddStudentForm extends Component {
                   placeholder="GPA:" />
                 <label>Campus: </label>  
                 <input
-                  value={this.state.campus}
+                  value={this.state.campusId}
                   onChange={this.studentCampusChangeHandler}
                   type="number"
-                  placeholder="Campus:" />
+                  placeholder="Campus Number" />
               <span>
-                <button type="submit" disabled={!this.state.firstName.length && this.state.isDirty}>Submit!</button>
+                <button type="submit">Submit!</button>
               </span>
             </div>
           </form>
@@ -103,10 +106,7 @@ class AddStudentForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-  };
-};
+const mapStateToProps = ({campuses}) => ({campuses});
 
 const mapDispatchToProps = dispatch => {
   return {

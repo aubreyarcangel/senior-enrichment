@@ -28,7 +28,7 @@ class App extends Component {
             <Switch>
               <Route exact path = "/" component={Home} />
                 <Route exact path="/students"
-                  render= {() => <AllStudents students= {this.props.students} />} />
+                  render= {() => <AllStudents students= {this.props.students} />} /> 
                 <Route exact path="/campuses" component={AllCampuses} />
                 <Route exact path="/add-campus" component={AddCampusForm} />
                 <Route path="/campuses/:id" component={SingleCampus} />

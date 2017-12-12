@@ -3,8 +3,10 @@ import { combineReducers } from 'redux'
 import students from './students';
 import campuses from './campuses';
 
+// I couldn't get this to work so I just defined combineReducers in the store.js
+
 const rootReducer = combineReducers({
-  // students,
+  students,
   campuses
 });
 
